@@ -1,0 +1,11 @@
+/* #pizza_list {
+  column-gap: 100px;
+} */
+
+#pizza-card {
+  max-width: 300px;
+}
+
+#container-div {
+  column-gap: 10px;
+}

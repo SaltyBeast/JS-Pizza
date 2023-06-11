@@ -1,0 +1,126 @@
+.header-section {
+  background-color: rgb(54, 54, 54);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 300px;
+  padding-left: 120px;
+  padding-right: 25px;
+  opacity: 0.95;
+  z-index: 1;
+}
+
+.distributor-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-section {
+  display: flex;
+}
+
+.phone-number {
+  color: rgb(155, 155, 155);
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.hours-of-work {
+  margin-left: 30px;
+  font-size: 15px;
+  color: rgb(155, 155, 155);
+  margin-bottom: 0;
+  padding-bottom: 10px;
+  /* margin-bottom: 10px; */
+}
+
+.delivery-text {
+  margin-left: 30px;
+  font-size: 17px;
+  margin-top: 13px;
+  margin-bottom: 0;
+  color: rgb(155, 155, 155);
+}
+
+.exit-button {
+  padding: 7px 13px 7px 13px;
+  background-color: orange;
+  border: 1px solid rgb(223, 145, 0);
+  color: white;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.exit-button.bottom{
+  visibility: hidden;
+}
+
+.menu-section {
+  border-top: 2px solid rgb(155, 155, 155);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-item {
+  color: white;
+  margin: 12px 0 12px 0;
+}
+
+@media (min-width: 0px) and (max-width: 1252px) {
+  .delivery-text{
+    display: none;
+  }
+}
+
+@media (min-width: 0px) and (max-width: 942px) {
+  .hours-of-work {
+    display: none;
+  }
+}
+
+@media (min-width: 0px) and (max-width: 670px) {
+  .phone-number {
+    font-size: 15px;
+  }
+
+  .exit-button {
+    display: none;
+  }
+
+  .menu-item {
+    display: none;
+  }
+
+  .menu-section {
+    justify-content: end;
+  }
+
+  .exit-button.bottom{
+    display: inline-block;
+    visibility: visible;
+  }
+}
+
+@media (min-width: 0px) and (max-width: 520px) {
+  .header-section  {
+    right: 200px;
+  }
+}
+
+@media (min-width: 0px) and (max-width: 458px) {
+  /* body {
+    overflow-y: scroll;
+    overflow-x: scroll;
+  } */
+
+  .distributor-section {
+    width: 111px;
+  }
+  .menu-section {
+    width: 111px;
+  }
+}

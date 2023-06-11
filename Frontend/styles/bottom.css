@@ -1,0 +1,33 @@
+.bottom-section {
+  height: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: aliceblue;
+  border-top: 1px solid lightgray;
+}
+
+.bottom-first, .bottom-second {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stuff-text {
+  font-size: 14px;
+  color: gray;
+}
+
+.stuff-text.first {
+  font-size: 14px;
+  color: gray;
+  margin-bottom: 13px;
+}
+
+@media (min-width: 0px) and (max-width: 1084px) {
+  .bottom-section {
+    padding-left: 110px;
+  }
+}
