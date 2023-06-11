@@ -308,7 +308,7 @@ body {
   }
 
   .info-section {
-    width: 250px;
+    width: 100%;
   }
 }
 
@@ -320,5 +320,15 @@ body {
   .main-wrapper {
       width: 241px;
       /* overflow-x: scroll; */
+  }
+  .pizza-types-section {
+    width: 100%;
+  }
+}
+
+@media (min-width: 0px) and (max-width: 430px) {
+  body {
+    width: 440px;
+    height: auto;
   }
 }
