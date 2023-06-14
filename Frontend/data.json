@@ -1,21 +1,34 @@
 [
     {
       "name": "Імпреза",
-      "type": "М'ясні",
+      "type": "М’ясна піца",
       "description": "Балик, салямі куриця, сир, моцарелла, сир рокфорд, ананаси, томатна паста, петрушка",
+      "content": {
+        "meat": ["балик", "салямі"],
+        "chicken": ["куриця"],
+        "cheese": ["сир моцарелла", "сир рокфорд"],
+        "pineapple": ["ананаси"],
+        "additional": ["томатна паста", "петрушка"]
+      },
       "smallPrice": 99,
       "bigPrice": 169,
       "smallWeight": 370,
       "bigWeight": 660,
       "both": true,
       "state": "Нова",
-      "fullImg": "www/assets/images/pizza_1.jpg",
-      "halfImg": "www/assets/images/halfPizza_1.png"
+      "fullImg": "www/assets/images/pizza_7.jpg",
+      "halfImg": "www/assets/images/halfPizza_7.png"
     },
     {
       "name": "BBQ",
-      "type": "М'ясні",
+      "type": "М’ясна піца",
       "description": "Мисливські ковбаски, ковбаски папероні, шинка, сир домашній, шампінйони, петрушка, оливки",
+      "content": {
+        "meat": ["мисливські ковбаски", "ковбаски папероні", "шинка"],
+        "cheese": ["сир домашній"],
+        "mushroom": ["шампінйони"],
+        "additional": ["петрушка", "оливки"]
+      },
       "smallPrice": 139,
       "bigPrice": 199,
       "smallWeight": 460,
@@ -27,47 +40,71 @@
     },
     {
       "name": "Міксовий поло",
-      "type": "М'ясні",
+      "type": "М’ясна піца",
       "description": "Вітчина, куриця копчена, сир моцарелла, ананаси, кукурудза, петрушка, соус томатний",
+      "content": {
+        "meat": ["вітчина", "куриця копчена"],
+        "cheese": ["сир моцарелла"],
+        "pineapple": ["ананаси"],
+        "additional": ["соус томатний", "петрушка", "кукурудза"]
+      },
       "smallPrice": 115,
       "bigPrice": 179,
       "smallWeight": 430,
       "bigWeight": 780,
       "both": true,
       "state": "none",
-      "fullImg": "www/assets/images/pizza_3.jpg",
-      "halfImg": "www/assets/images/halfPizza_3.png"
+      "fullImg": "www/assets/images/pizza_1.jpg",
+      "halfImg": "www/assets/images/halfPizza_1.png"
     },
     {
-      "name": "Карбонара",
-      "type": "З ананасами",
+      "name": "Сицаліано",
+      "type": "М’ясна піца",
       "description": "Лосось, сир моцарела, сир пармезан, болгарський перець, папероні чебрець, соус маринара",
+      "content": {
+        "meat": ["вітчина", "салямі"],
+        "cheese": ["сир моцарелла"],
+        "mushroom": ["шампінйони"],
+        "additional": ["соус томатний", "перець болгарський"]
+      },
       "smallPrice": 147,
       "bigPrice": 211,
       "smallWeight": 395,
       "bigWeight": 810,
       "both": true,
       "state": "none",
-      "fullImg": "www/assets/images/pizza_4.jpg",
-      "halfImg": "www/assets/images/halfPizza_4.png"
+      "fullImg": "www/assets/images/pizza_5.jpg",
+      "halfImg": "www/assets/images/halfPizza_5.png"
     },
     {
-      "name": "Баварська",
-      "type": "М'ясні",
+      "name": "Маргарита",
+      "type": "Вега піца",
       "description": "Філе куряче, перець болгарський, сир моцарела, ананас, часник, соус маринара, соус BBQ",
+      "content": {
+        "cheese": ["сир моцарелла", "сир домашній"],
+        "tomato": ["помідори"],
+        "additional": ["базилік", "оливкова олія", "соус томатний"]
+      },
       "smallPrice": 125,
       "bigPrice": 177,
       "smallWeight": 410,
       "bigWeight": 775,
       "both": true,
       "state": "none",
-      "fullImg": "www/assets/images/pizza_5.jpg",
-      "halfImg": "www/assets/images/halfPizza_5.png"
+      "fullImg": "www/assets/images/pizza_3.jpg",
+      "halfImg": "www/assets/images/halfPizza_3.png"
     },
     {
-      "name": "Мюнхенська",
-      "type": "З грибами",
+      "name": "Мікс смаків",
+      "type": "М’ясна піца",
       "description": "Соус гірчичний, сир моцарела, ковбаски мисливські, салямі, цибуля, гриби, петрушка",
+      "content": {
+        "meat": ["ковбаски"],
+        "cheese": ["сир моцарелла"],
+        "mushroom": ["шампінйони"],
+        "pineapple": ["ананаси"],
+        "additional": ["цибуля кримська", "огірки квашені", "соус гірчичний"]
+    },
       "smallPrice": 154,
       "bigPrice": 205,
       "smallWeight": 550,
@@ -78,35 +115,51 @@
       "halfImg": "www/assets/images/halfPizza_6.png"
     },
     {
-      "name": "Тартарино",
-      "type": "Вега",
+      "name": "Дольче Маре",
+      "type": "Морська піца",
       "description": "Соус томатний, сир моцарела, салямі, шинка, томати, печериці та французькі трави",
+      "content": {
+        "ocean": ["криветки тигрові", "мідії", "ікра червона", "філе червоної риби"],
+        "cheese": ["сир моцарелла"],
+        "additional": ["оливкова олія", "вершки"]
+      },
       "smallPrice": 110,
       "bigPrice": 0,
       "smallWeight": 540,
       "bigWeight": 0,
       "both": false,
       "state": "none",
-      "fullImg": "www/assets/images/pizza_7.jpg",
-      "halfImg": "www/assets/images/halfPizza_7.png"
+      "fullImg": "www/assets/images/pizza_8.jpg",
+      "halfImg": "www/assets/images/halfPizza_8.png"
     },
     {
-      "name": "Морська",
-      "type": "З морепродуктами",
+      "name": "Россо Густо",
+      "type": "Морська піца",
       "description": "Соус базилік, сир моцарела, мікс морепродуктів, ікра, мідії, лимон, зелень",
+      "content": {
+        "ocean": ["ікра червона", "лосось копчений"],
+        "cheese": ["сир моцарелла"],
+        "additional": ["оливкова олія", "вершки"]
+      },
       "smallPrice": 136,
       "bigPrice": 196,
       "smallWeight": 375,
       "bigWeight": 825,
       "both": true,
       "state": "none",
-      "fullImg": "www/assets/images/pizza_8.jpg",
-      "halfImg": "www/assets/images/halfPizza_8.png"
+      "fullImg": "www/assets/images/pizza_4.jpg",
+      "halfImg": "www/assets/images/halfPizza_4.png"
     },
     {
       "name": "Товстий фраєр",
-      "type": "З грибами",
+      "type": "Грибна піца",
       "description": "Соус томатний, сир моцарела, свинина, куряче філе, печериці, томати, солодкий перець",
+      "content": {
+        "meat": ["свинина", "куряче філе", "шинка"],
+        "cheese": ["сир моцарела"],
+        "mushroom": ["шампінйони"],
+        "additional": ["солодкий перець", "печериці", "соус томатний"]
+      },
       "smallPrice": 142,
       "bigPrice": 220,
       "smallWeight": 430,

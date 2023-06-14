@@ -4,11 +4,14 @@ const data = allPizzaData;
 
 const allAvailableProducts = document.getElementById("grid");
 
+document.addEventListener("DOMContentLoaded", getProducts);
+
+createProductsByType(data);
+
 document
   .querySelector(".pizza-types-section")
   .addEventListener("click", (e) => {
     let element = e.target;
-    console.log(element);
     if (element.className == "pizza-type") {
       removeSelectedType(element);
       newSelectedType(element);
@@ -36,8 +39,36 @@ function createProductsByType(products) {
 function giveProductsByType(type) {
   const productWithType = [];
   for (const product of data) {
-    if (product.type == type) {
-      productWithType.push(product);
+    switch (type) {
+      case "М'ясні":
+        if (product.content.meat !== undefined) {
+          productWithType.push(product);
+        }
+        break;
+      case "З ананасами":
+        if (product.content.pineapple !== undefined) {
+          productWithType.push(product);
+        }
+        break;
+      case "З грибами":
+        if (product.content.mushroom !== undefined) {
+          productWithType.push(product);
+        }
+        break;
+      case "З морепродуктами":
+        if (product.content.ocean !== undefined) {
+          productWithType.push(product);
+        }
+        break;
+      case "Вега":
+        if (
+          product.content.meat === undefined &&
+          product.content.chicken == undefined &&
+          product.content.ocean == undefined
+        ) {
+          productWithType.push(product);
+        }
+        break;
     }
   }
   return productWithType;
@@ -51,7 +82,6 @@ function createOneProductMenu(product) {
   imageSection.setAttribute("class", "img-section");
   const pizzaImg = document.createElement("img");
   pizzaImg.setAttribute("class", "pizza-img");
-  console.log(product.fullImg);
   pizzaImg.setAttribute("src", product.fullImg);
   pizzaImg.setAttribute("alt", "Піца " + product.name);
   imageSection.appendChild(pizzaImg);
@@ -80,7 +110,8 @@ function createOneProductMenu(product) {
   type.appendChild(document.createTextNode(product.type));
   const des = document.createElement("p");
   des.setAttribute("class", "pizza-des");
-  des.appendChild(document.createTextNode(product.description));
+  const description = getFullProductDescription(product.content);
+  des.appendChild(document.createTextNode(description));
   nameAndDes.appendChild(name);
   nameAndDes.appendChild(type);
   nameAndDes.appendChild(des);
@@ -116,7 +147,7 @@ function createOneProductMenu(product) {
     smallSection.appendChild(currency);
     smallSection.appendChild(buyButton);
     const bigSection = document.createElement("section");
-    bigSection.setAttribute("class", "small-order-section");
+    bigSection.setAttribute("class", "big-order-section");
     const bigSize = document.createElement("p");
     bigSize.setAttribute("class", "size-text");
     bigSize.appendChild(document.createTextNode("⍉ 40"));
@@ -185,6 +216,22 @@ function createOneProductMenu(product) {
   return productEl;
 }
 
+function getFullProductDescription(content) {
+  let str = "";
+  let i = 0;
+  for (const key in content) {
+    for (const val of content[key]) {
+      if (i === 0) {
+        str += val.charAt(0).toUpperCase() + val.slice(1) + ", ";
+      } else {
+        str += val + ", ";
+      }
+      i++;
+    }
+  }
+  return str.substring(0, str.length - 2);
+}
+
 function newSelectedType(typeElement) {
   typeElement.setAttribute("class", "pizza-type selected");
 }
@@ -224,7 +271,6 @@ console.log(alreadyInOrder);
 
 document.querySelector(".products-section").addEventListener("click", (e) => {
   let element = e.target;
-  console.log(element);
   if (element.className == "buy-button") {
     let nameOfTheProduct = giveProductName(element);
     let isBig = isBigPizza(element);
@@ -232,6 +278,7 @@ document.querySelector(".products-section").addEventListener("click", (e) => {
       name: nameOfTheProduct,
       isBig: isBig,
     };
+    console.log(product, alreadyInOrder);
     if (pizzaContains(product)) {
       incrementProductAmount(product);
     } else {
@@ -250,6 +297,7 @@ function giveProductName(buttonEl) {
 
 function isBigPizza(buttonEl) {
   let smallSection = buttonEl.closest(".small-order-section");
+  console.log(smallSection);
   if (smallSection == null) {
     return true;
   } else {
@@ -259,7 +307,7 @@ function isBigPizza(buttonEl) {
 
 function pizzaContains(product) {
   for (const prod of alreadyInOrder) {
-    if (prod.name.includes(product.name) && prod.isBig == product.isBig) {
+    if (prod.name.includes(product.name) && prod.isBig === product.isBig) {
       return true;
     }
   }
@@ -268,25 +316,28 @@ function pizzaContains(product) {
 
 function incrementProductAmount(product) {
   let orderedProduct = giveOrderedProduct(product);
-  console.log(orderedProduct, product);
   let amountInput = orderedProduct.querySelector(".amount-ordered");
   let amount = parseInt(amountInput.value);
   if (amount == 1) {
-    let minusButton = orderedProduct.querySelector(".minus-button");
-    minusButton.setAttribute("class", "minus-button");
-    minusButton.disabled = false;
+    // let minusButton = orderedProduct.querySelector(".minus-button");
+    // minusButton.setAttribute("class", "minus-button");
+    // minusButton.disabled = false;
   }
   amount++;
+  if (amount == 10) {
+    orderedProduct.querySelector(".amount-ordered").style.width = "21px";
+    orderedProduct.querySelector(".price").style.fontSize = "14px";
+  }
   orderedProduct.querySelector(".amount-ordered").value = amount;
   let fullProduct = giveProductDataByName(product.name);
   let newSumOfProduct;
-  console.log(product);
   if (product.isBig == true) {
     newSumOfProduct = amount * fullProduct.bigPrice;
   } else {
     newSumOfProduct = amount * fullProduct.smallPrice;
   }
   orderedProduct.querySelector(".price").innerHTML = `${newSumOfProduct}грн`;
+  saveData();
 }
 
 function giveOrderedProduct(product) {
@@ -297,7 +348,7 @@ function giveOrderedProduct(product) {
     let name = ordered.querySelector(".ordered-name").textContent;
     // let size = ordered.querySelector(".size-text-ordered").textContent;
     let isBig = name.includes("Мала") ? false : true;
-    if (name.includes(product.name) && product.isBig == isBig) {
+    if (name.includes(product.name) && product.isBig === isBig) {
       return ordered;
     }
   }
@@ -312,7 +363,6 @@ function giveProductDataByName(name) {
 }
 
 function createNewOrderedProduct(product) {
-  console.log(product);
   const fullProduct = giveProductDataByName(product.name);
   let volumeHere;
   let sizeHere;
@@ -371,7 +421,7 @@ function createNewOrderedProduct(product) {
   const middleSection = document.createElement("section");
   middleSection.setAttribute("class", "ordered-middle-section");
   const minusButton = document.createElement("button");
-  minusButton.setAttribute("class", "minus-button disabled");
+  minusButton.setAttribute("class", "minus-button");
   minusButton.appendChild(document.createTextNode("–"));
   const amountInput = document.createElement("input");
   amountInput.setAttribute("class", "amount-ordered");
@@ -412,6 +462,7 @@ function createNewOrderedProduct(product) {
   document
     .querySelector(".odered-products-section")
     .appendChild(orderedProduct);
+  saveData();
 }
 
 function getTotalPriceOfOrderedProducts(allOrderedProducts) {
@@ -419,7 +470,6 @@ function getTotalPriceOfOrderedProducts(allOrderedProducts) {
   for (const product of allOrderedProducts) {
     let priceText = product.querySelector(".price").textContent;
     let realPrice = parseInt(priceText.match(/\d+/)[0]);
-    console.log(realPrice);
     totalPrice += realPrice;
   }
   document.querySelector(".price-sum-text").innerHTML = `${totalPrice} грн`;
@@ -440,6 +490,7 @@ function cleanOrder() {
   console.log(allOrderedProducts);
   getTotalAmountOfOrderedProducts(allOrderedProducts);
   getTotalPriceOfOrderedProducts(allOrderedProducts);
+  saveData();
 }
 
 document
@@ -471,6 +522,7 @@ function removeProduct(crossButton) {
   orderedProductSection.remove();
   getTotalPriceOfOrderedProducts(allOrderedProducts);
   getTotalAmountOfOrderedProducts(allOrderedProducts);
+  saveData();
 }
 
 function removeFromList(product) {
@@ -489,29 +541,46 @@ function incrementProduct(plusButton) {
   let nameElement = orderedInfoSection.querySelector(".ordered-name");
   let nameAndWeight = nameElement.innerHTML.split(" ");
   let name = nameAndWeight[0];
-  let isBig = nameAndWeight[1].includes("Мала") ? false : true;
+  let isBig = nameElement.innerHTML.includes("Мала") ? false : true;
+  console.log(
+    {
+      name: name,
+      isBig: isBig,
+    },
+    nameAndWeight[1]
+  );
   incrementProductAmount({
     name: name,
     isBig: isBig,
   });
   getTotalPriceOfOrderedProducts(allOrderedProducts);
+  saveData();
 }
 
 function decrementProductAmount(minusButton) {
   let middleSection = minusButton.parentNode;
   let amountInput = middleSection.querySelector(".amount-ordered");
   let amount = parseInt(amountInput.value);
+  if (amount == 1) {
+    removeProduct(minusButton);
+  }
+  if (amount == 10) {
+    const orderedProduct = minusButton.closest(".ordered-product-section");
+    orderedProduct.querySelector(".amount-ordered").style.width = "11px";
+    orderedProduct.querySelector(".price").style.fontSize = "17px";
+  }
   if (amount == 2) {
     amount--;
     amountInput.value = amount;
-    minusButton.setAttribute("class", "minus-button disabled");
-    minusButton.disabled = true;
+    // minusButton.setAttribute("class", "minus-button disabled");
+    // minusButton.disabled = true;
   } else if (amount > 2) {
     amount--;
     amountInput.value = amount;
   }
   changePrice(middleSection.closest(".ordered-product-info"), amount);
   getTotalPriceOfOrderedProducts(allOrderedProducts);
+  saveData();
 }
 
 function changePrice(orderedInfoSection, amount) {
@@ -527,4 +596,134 @@ function changePrice(orderedInfoSection, amount) {
     newPriceText = amount * fullProduct.smallPrice;
   }
   orderedInfoSection.querySelector(".price").innerHTML = newPriceText + "грн";
+}
+
+function saveData() {
+  console.log("Hello");
+  const data = getArrayFromOrderedProducts().map((row) => {
+    console.log(row);
+    const sizeAndWeight = row.querySelectorAll(".size-text-ordered");
+    const productName = row.querySelector(".ordered-name");
+    const partOfName = productName.innerHTML.split(" ")[0];
+    const fullProduct = giveProductDataByName(partOfName);
+    console.log({
+      name: row.querySelector(".ordered-name").innerHTML,
+      size: sizeAndWeight[0].innerHTML,
+      weight: sizeAndWeight[1].innerHTML.split(" ")[2],
+      price: row.querySelector(".price").innerHTML,
+      amount: row.querySelector(".amount-ordered").value,
+      halfImg: fullProduct.halfImg,
+      // name: partOfName,
+      // isBig: isBig,
+    });
+    return {
+      name: row.querySelector(".ordered-name").innerHTML,
+      size: sizeAndWeight[0].innerHTML,
+      weight: sizeAndWeight[1].innerHTML.split(" ")[2],
+      price: row.querySelector(".price").innerHTML,
+      amount: row.querySelector(".amount-ordered").value,
+      halfImg: fullProduct.halfImg,
+    };
+  });
+
+  localStorage.setItem("orderedProducts", JSON.stringify(data));
+}
+
+function getArrayFromOrderedProducts() {
+  return Array.from(document.getElementsByClassName("ordered-product-section"));
+}
+
+function getProducts() {
+  let products;
+  if (localStorage.getItem("orderedProducts") === null) {
+    products = [];
+  } else {
+    products = JSON.parse(localStorage.getItem("orderedProducts"));
+  }
+  products.forEach(function (product) {
+    console.log(product);
+    const orderedProduct = document.createElement("section");
+    orderedProduct.setAttribute("class", "ordered-product-section");
+    // info
+    const orderedInfo = document.createElement("section");
+    orderedInfo.setAttribute("class", "ordered-product-info");
+    // inner
+    const nameAndWeight = document.createElement("section");
+    nameAndWeight.setAttribute("class", "name-and-weight");
+    const name = document.createElement("p");
+    name.setAttribute("class", "ordered-name"); //" " + volumeHere
+    name.appendChild(document.createTextNode(product.name));
+    const size1 = document.createElement("label");
+    size1.setAttribute("class", "size-text-ordered");
+    size1.appendChild(document.createTextNode(product.size));
+    const size2 = document.createElement("label");
+    size2.setAttribute("class", "size-text-ordered");
+    const img = document.createElement("img");
+    img.setAttribute("src", "www/assets/images/weight.svg");
+    size2.appendChild(img);
+    size2.appendChild(document.createTextNode(" " + product.weight));
+    nameAndWeight.appendChild(name);
+    nameAndWeight.appendChild(size1);
+    nameAndWeight.appendChild(size2);
+    // amount
+    const amountSection = document.createElement("section");
+    amountSection.setAttribute("class", "ordered-amount-section");
+    // inner
+    const leftSection = document.createElement("section");
+    leftSection.setAttribute("class", "ordered-left-section");
+    const price = document.createElement("span");
+    price.setAttribute("class", "price");
+    price.appendChild(document.createTextNode(product.price));
+    leftSection.appendChild(price);
+    const middleSection = document.createElement("section");
+    middleSection.setAttribute("class", "ordered-middle-section");
+    const minusButton = document.createElement("button");
+    minusButton.setAttribute("class", "minus-button");
+    minusButton.appendChild(document.createTextNode("–"));
+    const amountInput = document.createElement("input");
+    amountInput.setAttribute("class", "amount-ordered");
+    amountInput.setAttribute("type", "text");
+    amountInput.setAttribute("value", product.amount);
+    amountInput.setAttribute("readonly", true);
+    const plusButton = document.createElement("button");
+    plusButton.setAttribute("class", "plus-button");
+    plusButton.appendChild(document.createTextNode("+"));
+    middleSection.appendChild(minusButton);
+    middleSection.appendChild(amountInput);
+    middleSection.appendChild(plusButton);
+    const rightSection = document.createElement("section");
+    rightSection.setAttribute("class", "ordered-right-section");
+    const crossButton = document.createElement("button");
+    crossButton.setAttribute("class", "remove-button");
+    crossButton.appendChild(document.createTextNode("\u2716"));
+    rightSection.appendChild(crossButton);
+    amountSection.appendChild(leftSection);
+    amountSection.appendChild(middleSection);
+    amountSection.appendChild(rightSection);
+
+    orderedInfo.appendChild(nameAndWeight);
+    orderedInfo.appendChild(amountSection);
+
+    // image
+    const orderedImage = document.createElement("section");
+    orderedImage.setAttribute("class", "ordered-product-image");
+    const image = document.createElement("img");
+    image.setAttribute("class", "ordered-image");
+    image.setAttribute("src", product.halfImg);
+    image.setAttribute("alt", "Піца " + product.name);
+    orderedImage.appendChild(image);
+
+    orderedProduct.appendChild(orderedInfo);
+    orderedProduct.appendChild(orderedImage);
+
+    document
+      .querySelector(".odered-products-section")
+      .appendChild(orderedProduct);
+  });
+  getTotalAmountOfOrderedProducts(allOrderedProducts);
+  getTotalPriceOfOrderedProducts(allOrderedProducts);
+
+  alreadyInOrder = [];
+
+  fillWithDefaultProducts(allOrderedProducts);
 }

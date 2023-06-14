@@ -109,7 +109,7 @@
   align-items: center;
   font-weight: bold;
   font-size: 16px;
-  width: 60px;
+  width: 20%;
 }
 
 .ordered-middle-section {
@@ -297,7 +297,7 @@
     font-size: 12px;
   }
 
-  /* .clear-order-text {
-    font-size: 10px;
-  } */
+  .ordered-left-section {
+    width: 100%;
+  }
 }
