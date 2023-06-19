@@ -1,5 +1,7 @@
 import allPizzaData from "./data.json" assert { type: "json" };
 
+console.log(allPizzaData);
+
 const data = allPizzaData;
 
 const allAvailableProducts = document.getElementById("grid");

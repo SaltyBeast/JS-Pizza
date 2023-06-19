@@ -274,6 +274,12 @@ body {
   background-color: rgb(235, 235, 235);
 }
 
+@media (min-width: 943px) and (max-width: 2400px) {
+  .pizza-des {
+    height: 72px;
+  }
+}
+
 @media (min-width: 942px) and (max-width: 1252px) {
   .products-grid{
     grid-template-columns: 300px 300px; 
